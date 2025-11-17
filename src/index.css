@@ -1,0 +1,13 @@
+.maincart{
+        height: 324px;
+    width: 450px;
+    /* border: 1px solid; */
+    /* margin-left: 800px;
+   margin-bottom:30px;
+    margin-top: 36px; */
+}
+.cartdis{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+}
