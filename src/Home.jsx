@@ -1,12 +1,15 @@
-import { Container, Typography } from "@mui/material";
-import React from "react";
+import { Container, Paper, Typography } from "@mui/material";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { IoMdTime } from "react-icons/io";
-import { FaShippingFast } from "react-icons/fa";
+import { FaShippingFast, FaStar } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import { MdNoMeals } from "react-icons/md";
+
+
 const Home = () => {
+  
   return (
     <div className="homebg">
       <div className="homecontent">
@@ -34,8 +37,11 @@ const Home = () => {
         <Typography><FaLock />Safe & Secure Payments</Typography>
          <Typography> <MdNoMeals />Fresh & Hot Meals</Typography>
       </div>
+      
      </Container>
+   
       </div>
+      
     </div>
   );
 };
