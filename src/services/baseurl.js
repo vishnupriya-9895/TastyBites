@@ -1,0 +1,1 @@
+export const BaseUrl="https://foodserver-1mvr.onrender.com"

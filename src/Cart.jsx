@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getCart, updateCart, removeCart } from "./services/allapi";
-import { Container, Typography } from "@mui/material";
-import Button from "@mui/material/Button";
+import { Container, Typography, Button, Paper, Box } from "@mui/material";
+
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
@@ -18,91 +18,172 @@ const Cart = () => {
     loadCart();
   }, []);
 
-  //   add
   const increase = async (item) => {
-    const updatedItem = { ...item, qty: item.qty + 1 };
-    await updateCart(updatedItem);
+    await updateCart({ ...item, qty: item.qty + 1 });
     loadCart();
   };
 
-  //sub
   const decrease = async (item) => {
     if (item.qty > 1) {
-      const updatedItem = { ...item, qty: item.qty - 1 };
-      await updateCart(updatedItem);
+      await updateCart({ ...item, qty: item.qty - 1 });
     } else {
       await removeCart(item.id);
     }
     loadCart();
   };
 
-  // Calculate total
   const calculateTotal = (items) => {
-    const sum = items.reduce((acc, item) => acc + item.price * item.qty, 0);
+    const sum = items.reduce(
+      (acc, item) => acc + item.price * item.qty,
+      0
+    );
     setTotal(sum);
   };
 
   return (
-    <Container style={{ height: "80vh" }}>
+    <Container sx={{ minHeight: "80vh", mt: 4 }}>
       <Typography
-        style={{ textAlign: "center", marginBottom: "20px", marginTop: "20px" }}
-        variant="h5"
+        variant="h4"
+        sx={{
+          textAlign: "center",
+          mb: 4,
+          fontWeight: "bold",
+        }}
       >
-        Cart
+        Your Cart
       </Typography>
-      <div className="cartdis">
-        <div>
+
+      <Box
+        sx={{
+          display: "flex",
+          gap: 4,
+          flexWrap: "wrap",
+          alignItems: "flex-start",
+        }}
+      >
+        {/* IMAGE */}
+        <Box>
           <img
-            style={{ width: "400px" }}
             src="https://cdn.pixabay.com/photo/2022/01/28/12/17/fast-food-6974507_1280.jpg"
             alt=""
+            style={{
+              width: "380px",
+              borderRadius: "16px",
+              boxShadow: "0 12px 30px rgba(0,0,0,0.2)",
+            }}
           />
-        </div>
-        <div className="maincart">
+        </Box>
+
+        {/* CART ITEMS */}
+        <Box sx={{ flex: 1 }}>
           {cart.length === 0 ? (
-            <p>No items in cart</p>
+            <Typography>No items in cart</Typography>
           ) : (
             <>
               {cart.map((item) => (
-                <div
+                <Paper
                   key={item.id}
-                  style={{
+                  elevation={3}
+                  sx={{
+                    mb: 2,
+                    p: 2,
+                    borderRadius: "16px",
                     display: "flex",
+                    justifyContent: "space-between",
                     alignItems: "center",
-                    gap: "15px",
-                    marginBottom: "15px",
-                    border: "1px solid #ccc",
-                    padding: "10px",
+                    transition: "0.3s",
+                    "&:hover": {
+                      boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
+                    },
                   }}
                 >
-                  <div>
-                    <h3>{item.name}</h3>
-                    <p>Price: {item.price}</p>
-                    <div className="buttonmenu">
-                      <button onClick={() => decrease(item)}>-</button>
-                      <span style={{ margin: "0 10px" }}>{item.qty}</span>
-                      <button onClick={() => increase(item)}>+</button>
-                    </div>
-                  </div>
-                </div>
+                  <Box>
+                    <Typography variant="h6" fontWeight="bold">
+                      {item.name}
+                    </Typography>
+                    <Typography color="text.secondary">
+                      ₹ {item.price}
+                    </Typography>
+                  </Box>
+
+                  {/* QUANTITY CONTROLS */}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                    }}
+                  >
+                    <Button
+                      onClick={() => decrease(item)}
+                      variant="outlined"
+                      sx={{
+                        minWidth: "36px",
+                        borderRadius: "50%",
+                        fontSize: "18px",
+                      }}
+                    >
+                      −
+                    </Button>
+
+                    <Typography sx={{ minWidth: "20px", textAlign: "center" }}>
+                      {item.qty}
+                    </Typography>
+
+                    <Button
+                      onClick={() => increase(item)}
+                      variant="outlined"
+                      sx={{
+                        minWidth: "36px",
+                        borderRadius: "50%",
+                        fontSize: "18px",
+                      }}
+                    >
+                      +
+                    </Button>
+                  </Box>
+                </Paper>
               ))}
-              <Button
-                style={{
-                  marginLeft: "130px",
-                  marginBottom: "40px",
-                  marginTop: "10px",
-                  backgroundColor: "darkgreen",
+
+              {/* TOTAL */}
+              <Paper
+                elevation={4}
+                sx={{
+                  mt: 3,
+                  p: 2,
+                  borderRadius: "16px",
+                  background:
+                    "linear-gradient(135deg, #2e7d32, #1b5e20)",
+                  color: "white",
+                  textAlign: "center",
                 }}
-                variant="contained"
               >
-                <Typography style={{ textAlign: "center" }} variant="h6">
-                  To pay: {total}
+                <Typography variant="h6">
+                  Total Amount
                 </Typography>
-              </Button>
+                <Typography variant="h5" fontWeight="bold">
+                  ₹ {total}
+                </Typography>
+
+                <Button
+                  variant="contained"
+                  sx={{
+                    mt: 2,
+                    backgroundColor: "white",
+                    color: "#1b5e20",
+                    fontWeight: "bold",
+                    "&:hover": {
+                      backgroundColor: "#f1f1f1",
+                    },
+                  }}
+                >
+                  Proceed to Pay
+                </Button>
+              </Paper>
             </>
           )}
-        </div>
-      </div>
+        </Box>
+      </Box>
     </Container>
   );
 };

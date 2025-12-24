@@ -16,6 +16,7 @@ const About = () => {
           Connecting you with the best local food, on delivery at time
         </Typography>
       </div>
+   
       <Container>
         <Typography variant="h5">our story</Typography>
         <Typography
@@ -68,50 +69,94 @@ const About = () => {
           what's make us different
         </Typography>
         <Box
-          className="aboutbo"
-          style={{ justifyContent: "space-between" }}
-          sx={{
-            display: "flex",
+  sx={{
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    gap: 3,
+    mt: 4,
+  }}
+>
+  {[
+    {
+      title: "Local Favorite",
+      desc:
+        "Discover the flavors that our community loves! From classic comfort dishes to modern twists on traditional recipes, our menu highlights the tastes that keep our customers coming back.",
+    },
+    {
+      title: "Fastest Delivery",
+      desc:
+        "Craving your favorite meal? We make sure it reaches you hot, fresh, and on time! Our efficient delivery system ensures that your food gets to your doorstep quickly.",
+    },
+    {
+      title: "Eco-Friendly",
+      desc:
+        "We care for the planet as much as we care for your taste buds. From sustainable packaging to mindful sourcing of ingredients, every meal leaves a smaller footprint.",
+    },
+  ].map((item, index) => (
+    <Paper
+      key={index}
+      elevation={0}
+      sx={{
+        width: 300,
+        height: 220,
+        p: 2,
+        borderRadius: "16px",
+        textAlign: "center",
+        background:
+          "linear-gradient(135deg, #ffffff, #fafafa)",
+        boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+        cursor: "pointer",
+        transition: "all 0.35s ease",
+        animation: "fadeUp 0.8s ease forwards",
+        animationDelay: `${index * 0.3}s`,
 
-            flexWrap: "wrap",
-            "& > :not(style)": {
-              m: 1,
-              width: 300,
-              height: 200,
-              paddingTop: "20px",
-              textAlign: "center",
-              padding: "10px",
-              marginBottom: "100px",
-            },
-          }}
-        >
-          <Paper elevation={3}>
-            local favorite
-            <Typography className="aboutcard">
-              Discover the flavors that our community loves! From classic
-              comfort dishes to modern twists on traditional recipes, our menu
-              highlights the tastes that keep our customers coming back.
-            </Typography>
-          </Paper>
-          <Paper elevation={3}>
-            Fastest delivery
-            <Typography className="aboutcard">
-              Craving your favorite meal? We make sure it reaches you hot,
-              fresh, and on time! Our efficient delivery system ensures that
-              your food gets to your doorstep quickly, so you can enjoy every
-              bite without waiting.
-            </Typography>
-          </Paper>
-          <Paper elevation={3}>
-            eco-friendly
-            <Typography className="aboutcard">
-              We care for the planet as much as we care for your taste buds.
-              From sustainable packaging to mindful sourcing of ingredients, our
-              eco-friendly practices ensure that every meal you enjoy leaves a
-              smaller carbon footprint.
-            </Typography>
-          </Paper>
-        </Box>
+        "&:hover": {
+          transform: "translateY(-12px) scale(1.05)",
+          boxShadow: "0 18px 40px rgba(0,0,0,0.25)",
+        },
+      }}
+    >
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: "bold",
+          mb: 1,
+          color: "green",
+        }}
+      >
+        {item.title}
+      </Typography>
+
+      <Typography
+        sx={{
+          fontSize: "0.95rem",
+          lineHeight: 1.6,
+          color: "#555",
+        }}
+      >
+        {item.desc}
+      </Typography>
+    </Paper>
+  ))}
+
+  {/* Inline animation keyframe */}
+  <style>
+    {`
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    `}
+  </style>
+</Box>
+
       </Container>
     </div>
   );

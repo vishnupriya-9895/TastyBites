@@ -1,20 +1,22 @@
 import axiosConfig from "./axiosconfig";
+import { BaseUrl } from "./baseurl";
 
-export const addToCart = async (reqbody) => {
-  return await axiosConfig("post", "http://localhost:3000/cart", reqbody);
+export const getItems = async () => {
+  return await axiosConfig('get', `${BaseUrl}/items`);
 };
 
 export const getCart = async () => {
-  return await axiosConfig("get", "http://localhost:3000/cart");
+  return await axiosConfig('get', `${BaseUrl}/cart`);
+};
+
+export const addToCart = async (item) => {
+  return await axiosConfig('post', `${BaseUrl}/cart`, item);
 };
 
 export const updateCart = async (item) => {
-  return await axiosConfig("put", `http://localhost:3000/cart/${item.id}`, item);
+  return await axiosConfig('put', `${BaseUrl}/cart/${item.id}`, item);
 };
-
-
 
 export const removeCart = async (id) => {
-  return await axiosConfig("delete", `http://localhost:3000/cart/${id}`);
+  return await axiosConfig('delete', `${BaseUrl}/cart/${id}`);
 };
-
